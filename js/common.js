@@ -1,12 +1,32 @@
-$("ul.mainMenu>li").mouseover(function(){
-    $("ul.subMenu").stop().slideDown();
-    $("div.layer").stop().slideDown();
+$("ul.mainMenu>li").mouseover(function () {
+  $("ul.subMenu").stop().slideDown();
+  $("div.layer").stop().slideDown();
 });
-$("ul.mainMenu>li").mouseout(function(){
-    $("ul.subMenu").stop().slideUp();
-    $("div.layer").stop().slideUp();
+$("ul.mainMenu>li").mouseout(function () {
+  $("ul.subMenu").stop().slideUp();
+  $("div.layer").stop().slideUp();
 });
 
+const showing_class = "showing";
+const firstSlide = document.querySelector(".slideStage:first-child");
+
+function slide() {
+  const currentSlide = document.querySelector(`.${showing_class}`);
+  if (currentSlide) {
+    currentSlide.classList.remove(showing_class);
+    const nextSlide = currentSlide.nextElementSibling;
+    if (nextSlide) {
+      nextSlide.classList.add(showing_class);
+    } else {
+      firstSlide.classList.add(showing_class);
+    }
+  } else {
+    firstSlide.classList.add(showing_class);
+  }
+}
+
+slide();
+setInterval(slide, 5000);
 
 // var now = 0;
 // var cnt = 1;
@@ -24,16 +44,21 @@ $("ul.mainMenu>li").mouseout(function(){
 //     $(this).children("li>a>img").css({"width":"300px"});
 // }
 
-var mouseover = document.querySelector(".mouseover");
-var hide = document.querySelector(".hide");
+var mouseover = document.querySelectorAll(".mouseover");
+var hide = document.querySelectorAll(".hide");
 
-mouseover.addEventListener("mouseover", function() {
-    mouseover.style.display = "none";
-    hide.style.display="block"
-});
+for (var i = 0; i < mouseover.length; i++) {
+  mouseover[i].addEventListener("mouseover", function () {
+    this.style.display = "none";
+  });
+}
 
-mouseover.addEventListener("mouseout", function() {
-    mouseover.style.display = "block";
-    hide.style.display="none"
-});
-
+for (var i = 0; i < mouseover.length; i++) {
+  mouseover[i].addEventListener("mouseout", function () {
+    this.style.display = "block";
+  });
+}
+// mouseover.addEventListener("mouseout", function () {
+//   mouseover.style.display = "block";
+//   hide.style.display = "none";
+// });
